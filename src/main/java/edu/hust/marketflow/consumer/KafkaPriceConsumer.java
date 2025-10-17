@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class KafkaPriceConsumer {
     private static final String TOPIC = "stock_prices";
-    private static final String BOOTSTRAP_SERVERS = "localhost:9092";
+    private static final String BOOTSTRAP_SERVERS = "localhost:9094";
     private static final String GROUP_ID = "price-consumer-group";
 
     public static void main(String[] args) {
