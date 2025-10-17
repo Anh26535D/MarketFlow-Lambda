@@ -1,6 +1,6 @@
 package edu.hust.marketflow.producer;
 
-import edu.hust.marketflow.model.StockPriceRecord;
+import edu.hust.marketflow.model.StockPriceModel;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 
@@ -24,24 +24,24 @@ public class KafkaPriceProducer {
         return this.kafkaProducer.send(record);
     }
 
-    private static String toJson(StockPriceRecord record) {
+    private static String toJson(StockPriceModel record) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return String.format(
                 "{\"symbol\":\"%s\",\"date\":\"%s\",\"adjustedPrice\":%.2f,\"closePrice\":%.2f,\"change\":%.2f," +
                         "\"matchedVolume\":%d,\"matchedValue\":%.2f,\"negotiatedVolume\":%d,\"negotiatedValue\":%.2f," +
                         "\"openPrice\":%.2f,\"highPrice\":%.2f,\"lowPrice\":%.2f}",
-                record.symbol(),
-                df.format(record.date()),
-                record.adjustedPrice(),
-                record.closePrice(),
-                record.change(),
-                record.matchedVolume(),
-                record.matchedValue(),
-                record.negotiatedVolume(),
-                record.negotiatedValue(),
-                record.openPrice(),
-                record.highPrice(),
-                record.lowPrice()
+                record.getSymbol(),
+                df.format(record.getDate()),
+                record.getAdjustedPrice(),
+                record.getClosePrice(),
+                record.getChange(),
+                record.getMatchedVolume(),
+                record.getMatchedValue(),
+                record.getNegotiatedVolume(),
+                record.getNegotiatedValue(),
+                record.getOpenPrice(),
+                record.getHighPrice(),
+                record.getLowPrice()
         );
     }
 
@@ -55,7 +55,7 @@ public class KafkaPriceProducer {
         KafkaPriceProducer priceProducer = new KafkaPriceProducer(kafkaProducer);
 
         while (true) {
-            StockPriceRecord record = new StockPriceRecord(
+            StockPriceModel record = new StockPriceModel(
                     "VIC", new Date(), 71.5, 72.1, 0.8,
                     500_000, 35_000_000, 50_000, 3_500_000,
                     71.0, 72.5, 70.8
@@ -63,7 +63,7 @@ public class KafkaPriceProducer {
 
             String jsonValue = toJson(record);
             ProducerRecord<String, String> kafkaRecord =
-                    new ProducerRecord<>(TOPIC, record.symbol(), jsonValue);
+                    new ProducerRecord<>(TOPIC, record.getSymbol(), jsonValue);
 
             priceProducer.send(kafkaRecord).get();
             System.out.println("✅ Sent: " + jsonValue);
