@@ -7,6 +7,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -54,11 +55,31 @@ public class KafkaPriceProducer {
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(props);
         KafkaPriceProducer priceProducer = new KafkaPriceProducer(kafkaProducer);
 
+        Random random = new Random();
+        String[] symbols = {"VIC", "VNM", "HPG", "SSI", "VCB", "FPT", "MWG"};
+
         while (true) {
+            // Pick a random stock symbol
+            String symbol = symbols[random.nextInt(symbols.length)];
+
+            // Generate random base price and daily fluctuations
+            double basePrice = 70 + random.nextDouble() * 30;  // between 70 and 100
+            double open = basePrice + (random.nextDouble() - 0.5); // +/- 0.5
+            double close = basePrice + (random.nextDouble() - 0.5);
+            double change = close - open;
+            double high = Math.max(open, close) + random.nextDouble();
+            double low = Math.min(open, close) - random.nextDouble();
+
+            long volume = 100_000 + random.nextInt(900_000);
+            long value = (long) (volume * close);
+            long buyVol = volume / 2 + random.nextInt((int) (volume / 2));
+            long sellVol = volume - buyVol;
+            double buyValue = buyVol * close;
+            double sellValue = sellVol * close;
+
             StockPriceModel record = new StockPriceModel(
-                    "VIC", new Date(), 71.5, 72.1, 0.8,
-                    500_000, 35_000_000, 50_000, 3_500_000,
-                    71.0, 72.5, 70.8
+                    symbol, new Date(), open, close, change,
+                    volume, value, buyVol, buyValue, low, high, sellValue
             );
 
             String jsonValue = toJson(record);
@@ -68,7 +89,7 @@ public class KafkaPriceProducer {
             priceProducer.send(kafkaRecord).get();
             System.out.println("✅ Sent: " + jsonValue);
 
-            // Add 2 seconds delay between messages
+            // Delay between messages
             Thread.sleep(2000);
         }
     }
