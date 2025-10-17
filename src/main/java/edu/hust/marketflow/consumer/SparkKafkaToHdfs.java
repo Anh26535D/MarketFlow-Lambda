@@ -38,7 +38,7 @@ public class SparkKafkaToHdfs {
                 .format("text") // could switch to parquet later
                 .option("path", hdfsOutputPath)
                 .option("checkpointLocation", checkpointPath)
-                .trigger(Trigger.ProcessingTime("5 seconds"))
+                .trigger(Trigger.ProcessingTime("2 seconds"))
                 .start();
 
         query.awaitTermination();
