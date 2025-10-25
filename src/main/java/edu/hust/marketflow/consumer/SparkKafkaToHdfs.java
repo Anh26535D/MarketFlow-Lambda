@@ -1,5 +1,6 @@
 package edu.hust.marketflow.consumer;
 
+import edu.hust.marketflow.ConfigLoader;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -12,10 +13,10 @@ import java.util.concurrent.TimeoutException;
 public class SparkKafkaToHdfs {
     public static void main(String[] args) throws StreamingQueryException, TimeoutException {
 
-        String kafkaBootstrapServers = "kafka:9092";  // docker service name
-        String kafkaTopic = "stock_prices";
-        String hdfsOutputPath = "hdfs://namenode:8020/marketflow/stock_prices/";
-        String checkpointPath = "hdfs://namenode:8020/marketflow/checkpoints/";
+        String kafkaBootstrapServers = ConfigLoader.getOrThrow(ConfigLoader.KAFKA_BOOTSTRAP_SERVERS);
+        String kafkaTopic = ConfigLoader.getOrThrow(ConfigLoader.KAFKA_TOPIC);
+        String hdfsOutputPath = ConfigLoader.getOrThrow(ConfigLoader.HDFS_DATA_DIR);
+        String checkpointPath = ConfigLoader.getOrThrow(ConfigLoader.HDFS_CHECKPOINT_DIR);
 
         SparkSession spark = SparkSession.builder()
                 .appName("KafkaToHdfsStreaming")
@@ -35,7 +36,7 @@ public class SparkKafkaToHdfs {
 
         StreamingQuery query = values.writeStream()
                 .outputMode("append")
-                .format("text") // could switch to parquet later
+                .format("text")
                 .option("path", hdfsOutputPath)
                 .option("checkpointLocation", checkpointPath)
                 .trigger(Trigger.ProcessingTime("2 seconds"))
