@@ -15,6 +15,8 @@ docker-compose up -d
 
 ./run-producer.sh 
 
-./run-streaming.sh 
+./run-kafka-to-hdfs.sh 
+
+./run-hdfs-to-cassandra.sh
 ```
 
