@@ -1,13 +1,16 @@
-package edu.hust.marketflow.consumer;
+package consumer;
 
-import org.apache.kafka.clients.consumer.*;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 
-public class KafkaPriceConsumer {
+public class KafkaPriceConsumerTest {
     private static final String TOPIC = "stock_prices";
     private static final String BOOTSTRAP_SERVERS = "localhost:9094";
     private static final String GROUP_ID = "price-consumer-group";

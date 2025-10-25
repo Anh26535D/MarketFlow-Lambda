@@ -25,27 +25,6 @@ public class KafkaPriceProducer {
         return this.kafkaProducer.send(record);
     }
 
-    private static String toJson(StockPriceModel record) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return String.format(
-                "{\"symbol\":\"%s\",\"date\":\"%s\",\"adjustedPrice\":%.2f,\"closePrice\":%.2f,\"change\":%.2f," +
-                        "\"matchedVolume\":%d,\"matchedValue\":%.2f,\"negotiatedVolume\":%d,\"negotiatedValue\":%.2f," +
-                        "\"openPrice\":%.2f,\"highPrice\":%.2f,\"lowPrice\":%.2f}",
-                record.getSymbol(),
-                df.format(record.getDate()),
-                record.getAdjustedPrice(),
-                record.getClosePrice(),
-                record.getChange(),
-                record.getMatchedVolume(),
-                record.getMatchedValue(),
-                record.getNegotiatedVolume(),
-                record.getNegotiatedValue(),
-                record.getOpenPrice(),
-                record.getHighPrice(),
-                record.getLowPrice()
-        );
-    }
-
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
@@ -82,12 +61,11 @@ public class KafkaPriceProducer {
                     volume, value, buyVol, buyValue, low, high, sellValue
             );
 
-            String jsonValue = toJson(record);
             ProducerRecord<String, String> kafkaRecord =
-                    new ProducerRecord<>(TOPIC, record.getSymbol(), jsonValue);
+                    new ProducerRecord<>(TOPIC, record.getSymbol(), record.toJsonFormat());
 
             priceProducer.send(kafkaRecord).get();
-            System.out.println("✅ Sent: " + jsonValue);
+            System.out.println("✅ Sent: " + record);
 
             // Delay between messages
             Thread.sleep(2000);
