@@ -122,3 +122,20 @@ services:
       - ./data/spark/logs:/opt/spark/logs
     networks:
       - marketflow-net
+
+  cassandra:
+    image: cassandra:4.1
+    container_name: cassandra
+    hostname: cassandra
+    ports:
+      - "9042:9042"
+    environment:
+      - CASSANDRA_CLUSTER_NAME=MarketFlowCluster
+      - CASSANDRA_SEEDS=cassandra
+      - MAX_HEAP_SIZE=512M
+      - HEAP_NEWSIZE=256M
+    volumes:
+      - ./data/cassandra:/var/lib/cassandra
+      - ./schema.cql:/schema.cql
+    networks:
+      - marketflow-net

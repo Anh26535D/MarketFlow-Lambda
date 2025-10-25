@@ -14,8 +14,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Versions -->
-        <kafka.version>2.4.1</kafka.version>
-        <spark.version>3.0.0</spark.version>
+        <kafka.version>3.5.1</kafka.version>
+        <spark.version>3.5.1</spark.version>
         <scala.binary.version>2.12</scala.binary.version>
     </properties>
 
@@ -55,6 +55,13 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
             <version>${kafka.version}</version>
+        </dependency>
+
+        <!-- Spark Cassandra Connector -->
+        <dependency>
+            <groupId>com.datastax.spark</groupId>
+            <artifactId>spark-cassandra-connector_${scala.binary.version}</artifactId>
+            <version>${spark.version}</version>
         </dependency>
 
         <!-- Logging -->
