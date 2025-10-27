@@ -81,7 +81,7 @@ services:
       - marketflow-net
 
   spark-master:
-    image: apache/spark:3.5.1
+    build: ./spark-master
     container_name: spark-master
     hostname: spark-master
     ports:

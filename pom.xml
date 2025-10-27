@@ -36,6 +36,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--  Spark Streaming  -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.12</artifactId>
+            <version>${spark.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Spark Structured Streaming with Kafka -->
         <dependency>
             <groupId>org.apache.spark</groupId>
