@@ -5,7 +5,7 @@ JAR_NAME="MarketFlow-Lambda-1.0-SNAPSHOT-shaded.jar"
 JAR_PATH="target/$JAR_NAME"
 SPARK_CONTAINER="spark-master"
 CONTAINER_JAR_PATH="/opt/spark-jobs/$JAR_NAME"
-MAIN_CLASS="edu.hust.marketflow.batch.HdfsToCassandra"
+MAIN_CLASS="edu.hust.marketflow.batch.HdfsToCustomerPurchaseHistory"
 SPARK_MASTER_URL="spark://spark-master:7077"
 
 echo "[1/5] Verifying JAR..."
