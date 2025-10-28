@@ -18,5 +18,9 @@ docker-compose up -d
 ./run-kafka-to-hdfs.sh 
 
 ./run-hdfs-to-cassandra.sh
+
+./run-speed-layer.sh
+
+./run-data-integration.sh
 ```
 

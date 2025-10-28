@@ -1,0 +1,4 @@
+stock,date,adj_close,change,negotiated_volume
+AAPL,2025-10-27,177.05,1.2,1000000
+GOOG,2025-10-27,146.4,0.9,510000
+TSLA,2025-10-27,754.5,4.5,590000
