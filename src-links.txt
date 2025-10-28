@@ -1,0 +1,4 @@
+# Data source
+- https://www.kaggle.com/datasets/bhavikjikadara/retail-transactional-dataset/data
+- https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce/data
+- https://www.kaggle.com/competitions/h-and-m-personalized-fashion-recommendations/data

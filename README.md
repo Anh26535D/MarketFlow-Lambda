@@ -5,6 +5,16 @@ It simulates stock price streams, processes them with Spark, and stores them in 
 
 ---
 
+## Prerequisites
+1. Download datasets from src-links.txt and place them in the `datasets/` directory.
+datasets/
+- hm_fashion/
+  - articles.csv
+  - customers.csv
+  - transactions.csv
+- olist/
+- retal/
+
 ## Architecture Overview
 
 ## Usage
@@ -18,5 +28,7 @@ docker-compose up -d
 ./run-kafka-to-hdfs.sh 
 
 ./run-hdfs-to-cassandra.sh
+
+./run-speed-layer.sh
 ```
 
