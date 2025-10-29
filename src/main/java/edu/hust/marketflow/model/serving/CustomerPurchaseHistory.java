@@ -1,20 +1,52 @@
 package edu.hust.marketflow.model.serving;
 
+import com.datastax.driver.mapping.annotations.ClusteringColumn;
+import com.datastax.driver.mapping.annotations.Column;
+import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.datastax.driver.mapping.annotations.Table;
+import edu.hust.marketflow.ConfigLoader;
+
 import java.io.Serializable;
 
+@Table(keyspace = ConfigLoader.CASSANDRA_KEYSPACE, name = "customer_purchase_history")
 public class CustomerPurchaseHistory implements Serializable {
-    // TODO: Use public for data class
+    @PartitionKey
+    @Column(name = "customer_id")
     private String customerId;
+
+    @ClusteringColumn
+    @Column(name = "timestamp")
     private String timestamp;
+
+    @ClusteringColumn
+    @Column(name = "product_id")
     private String productId;
+
+    @Column(name = "product_name")
     private String productName;
+
+    @Column(name = "category")
     private String category;
+
+    @Column(name = "brand")
     private String brand;
+
+    @Column(name = "price")
     private double price;
+
+    @Column(name = "quantity")
     private int quantity;
+
+    @Column(name = "total_amount")
     private double totalAmount;
+
+    @Column(name = "payment_method")
     private String paymentMethod;
+
+    @Column(name = "region")
     private String region;
+
+    @Column(name = "source_system")
     private String sourceSystem;
 
     public String getCustomerId() { return customerId; }

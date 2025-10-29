@@ -8,7 +8,6 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.Row;
-import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -94,15 +93,12 @@ public class HdfsToCustomerPurchaseHistory {
         System.out.println("✅ Preview sample data before writing to Cassandra:");
         sampleCustomerPurchaseHistory.forEach(System.out::println);
 
-        // --- Define Cassandra column mappings ---
-        Map<String, String> columnMappings = getColumnMappings();
-
         // --- Write to Cassandra ---
         CassandraJavaUtil.javaFunctions(customerRDD)
                 .writerBuilder(
                         cassandraKeyspace,
                         cassandraTable,
-                        CassandraJavaUtil.mapToRow(CustomerPurchaseHistory.class, columnMappings)
+                        CassandraJavaUtil.mapToRow(CustomerPurchaseHistory.class)
                 )
                 .saveToCassandra();
 
@@ -111,22 +107,5 @@ public class HdfsToCustomerPurchaseHistory {
 
         jsc.close();
         spark.stop();
-    }
-
-    private static @NotNull Map<String, String> getColumnMappings() {
-        Map<String, String> columnMappings = new HashMap<>();
-        columnMappings.put("customerId", "customerid");
-        columnMappings.put("timestamp", "timestamp");
-        columnMappings.put("productId", "productid");
-        columnMappings.put("productName", "productname");
-        columnMappings.put("category", "category");
-        columnMappings.put("brand", "brand");
-        columnMappings.put("price", "price");
-        columnMappings.put("quantity", "quantity");
-        columnMappings.put("totalAmount", "totalamount");
-        columnMappings.put("paymentMethod", "paymentmethod");
-        columnMappings.put("region", "region");
-        columnMappings.put("sourceSystem", "sourcesystem");
-        return columnMappings;
     }
 }
