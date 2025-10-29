@@ -1,6 +1,6 @@
 package edu.hust.marketflow.producer.datagenerator;
 
-import edu.hust.marketflow.model.hnmdatamodel.*;
+import edu.hust.marketflow.model.hnmsrc.*;
 import edu.hust.marketflow.model.UnifiedDataModel;
 
 import javax.annotation.Nullable;

@@ -1,4 +1,4 @@
-package edu.hust.marketflow.model.hnmdatamodel;
+package edu.hust.marketflow.model.hnmsrc;
 
 public class HnMCustomer {
     public String customer_id;

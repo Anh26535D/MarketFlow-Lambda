@@ -1,4 +1,0 @@
-ticker,trade_date,open_price,high_price,low_price,close_price,matched_volume
-AAPL,2025-10-27,175.1,178.2,174.4,177.1,1195000
-MSFT,2025-10-27,319.8,324.5,317.5,321.8,805000
-TSLA,2025-10-27,750.0,760.0,745.0,755.0,600000
