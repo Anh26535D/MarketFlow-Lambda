@@ -1,63 +1,263 @@
 package edu.hust.marketflow.model.hnmsrc;
 
 public class HnMArticle {
-    public String article_id;
-    public String product_code;
-    public String prod_name;
-    public String product_type_no;
-    public String product_type_name;
-    public String product_group_name;
-    public String graphical_appearance_no;
-    public String graphical_appearance_name;
-    public String colour_group_code;
-    public String colour_group_name;
-    public String perceived_colour_value_id;
-    public String perceived_colour_value_name;
-    public String perceived_colour_master_id;
-    public String perceived_colour_master_name;
-    public String department_no;
-    public String department_name;
-    public String index_code;
-    public String index_name;
-    public String index_group_no;
-    public String index_group_name;
-    public String section_no;
-    public String section_name;
-    public String garment_group_no;
-    public String garment_group_name;
-    public String detail_desc;
+    private String articleId;
+    private String productCode;
+    private String prodName;
+    private String productTypeNo;
+    private String productTypeName;
+    private String productGroupName;
+    private String graphicalAppearanceNo;
+    private String graphicalAppearanceName;
+    private String colourGroupCode;
+    private String colourGroupName;
+    private String perceivedColourValueId;
+    private String perceivedColourValueName;
+    private String perceivedColourMasterId;
+    private String perceivedColourMasterName;
+    private String departmentNo;
+    private String departmentName;
+    private String indexCode;
+    private String indexName;
+    private String indexGroupNo;
+    private String indexGroupName;
+    private String sectionNo;
+    private String sectionName;
+    private String garmentGroupNo;
+    private String garmentGroupName;
+    private String detailDesc;
 
     public static int getFieldCount() {
         return 25;
     }
 
+    public String getColourGroupName() {
+        return colourGroupName;
+    }
+
+    public void setColourGroupName(String colourGroupName) {
+        this.colourGroupName = colourGroupName;
+    }
+
+    public String getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
+    }
+
+    public String getColourGroupCode() {
+        return colourGroupCode;
+    }
+
+    public void setColourGroupCode(String colourGroupCode) {
+        this.colourGroupCode = colourGroupCode;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getDepartmentNo() {
+        return departmentNo;
+    }
+
+    public void setDepartmentNo(String departmentNo) {
+        this.departmentNo = departmentNo;
+    }
+
+    public String getDetailDesc() {
+        return detailDesc;
+    }
+
+    public void setDetailDesc(String detailDesc) {
+        this.detailDesc = detailDesc;
+    }
+
+    public String getGarmentGroupName() {
+        return garmentGroupName;
+    }
+
+    public void setGarmentGroupName(String garmentGroupName) {
+        this.garmentGroupName = garmentGroupName;
+    }
+
+    public String getGarmentGroupNo() {
+        return garmentGroupNo;
+    }
+
+    public void setGarmentGroupNo(String garmentGroupNo) {
+        this.garmentGroupNo = garmentGroupNo;
+    }
+
+    public String getGraphicalAppearanceName() {
+        return graphicalAppearanceName;
+    }
+
+    public void setGraphicalAppearanceName(String graphicalAppearanceName) {
+        this.graphicalAppearanceName = graphicalAppearanceName;
+    }
+
+    public String getGraphicalAppearanceNo() {
+        return graphicalAppearanceNo;
+    }
+
+    public void setGraphicalAppearanceNo(String graphicalAppearanceNo) {
+        this.graphicalAppearanceNo = graphicalAppearanceNo;
+    }
+
+    public String getIndexCode() {
+        return indexCode;
+    }
+
+    public void setIndexCode(String indexCode) {
+        this.indexCode = indexCode;
+    }
+
+    public String getIndexGroupName() {
+        return indexGroupName;
+    }
+
+    public void setIndexGroupName(String indexGroupName) {
+        this.indexGroupName = indexGroupName;
+    }
+
+    public String getIndexGroupNo() {
+        return indexGroupNo;
+    }
+
+    public void setIndexGroupNo(String indexGroupNo) {
+        this.indexGroupNo = indexGroupNo;
+    }
+
+    public String getIndexName() {
+        return indexName;
+    }
+
+    public void setIndexName(String indexName) {
+        this.indexName = indexName;
+    }
+
+    public String getPerceivedColourMasterId() {
+        return perceivedColourMasterId;
+    }
+
+    public void setPerceivedColourMasterId(String perceivedColourMasterId) {
+        this.perceivedColourMasterId = perceivedColourMasterId;
+    }
+
+    public String getPerceivedColourMasterName() {
+        return perceivedColourMasterName;
+    }
+
+    public void setPerceivedColourMasterName(String perceivedColourMasterName) {
+        this.perceivedColourMasterName = perceivedColourMasterName;
+    }
+
+    public String getPerceivedColourValueId() {
+        return perceivedColourValueId;
+    }
+
+    public void setPerceivedColourValueId(String perceivedColourValueId) {
+        this.perceivedColourValueId = perceivedColourValueId;
+    }
+
+    public String getPerceivedColourValueName() {
+        return perceivedColourValueName;
+    }
+
+    public void setPerceivedColourValueName(String perceivedColourValueName) {
+        this.perceivedColourValueName = perceivedColourValueName;
+    }
+
+    public String getProdName() {
+        return prodName;
+    }
+
+    public void setProdName(String prodName) {
+        this.prodName = prodName;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public String getProductGroupName() {
+        return productGroupName;
+    }
+
+    public void setProductGroupName(String productGroupName) {
+        this.productGroupName = productGroupName;
+    }
+
+    public String getProductTypeName() {
+        return productTypeName;
+    }
+
+    public void setProductTypeName(String productTypeName) {
+        this.productTypeName = productTypeName;
+    }
+
+    public String getProductTypeNo() {
+        return productTypeNo;
+    }
+
+    public void setProductTypeNo(String productTypeNo) {
+        this.productTypeNo = productTypeNo;
+    }
+
+    public String getSectionName() {
+        return sectionName;
+    }
+
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
+    }
+
+    public String getSectionNo() {
+        return sectionNo;
+    }
+
+    public void setSectionNo(String sectionNo) {
+        this.sectionNo = sectionNo;
+    }
+
     public static HnMArticle fromArray(String [] p) {
         HnMArticle a = new HnMArticle();
-        a.article_id = p[0];
-        a.product_code = p[1];
-        a.prod_name = p[2];
-        a.product_type_no = p[3];
-        a.product_type_name = p[4];
-        a.product_group_name = p[5];
-        a.graphical_appearance_no = p[6];
-        a.graphical_appearance_name = p[7];
-        a.colour_group_code = p[8];
-        a.colour_group_name = p[9];
-        a.perceived_colour_value_id = p[10];
-        a.perceived_colour_value_name = p[11];
-        a.perceived_colour_master_id = p[12];
-        a.perceived_colour_master_name = p[13];
-        a.department_no = p[14];
-        a.department_name = p[15];
-        a.index_code = p[16];
-        a.index_name = p[17];
-        a.index_group_no = p[18];
-        a.index_group_name = p[19];
-        a.section_no = p[20];
-        a.section_name = p[21];
-        a.garment_group_no = p[22];
-        a.garment_group_name = p[23];
-        a.detail_desc = p[24];
+        a.articleId = p[0];
+        a.productCode = p[1];
+        a.prodName = p[2];
+        a.productTypeNo = p[3];
+        a.productTypeName = p[4];
+        a.productGroupName = p[5];
+        a.graphicalAppearanceNo = p[6];
+        a.graphicalAppearanceName = p[7];
+        a.colourGroupCode = p[8];
+        a.colourGroupName = p[9];
+        a.perceivedColourValueId = p[10];
+        a.perceivedColourValueName = p[11];
+        a.perceivedColourMasterId = p[12];
+        a.perceivedColourMasterName = p[13];
+        a.departmentNo = p[14];
+        a.departmentName = p[15];
+        a.indexCode = p[16];
+        a.indexName = p[17];
+        a.indexGroupNo = p[18];
+        a.indexGroupName = p[19];
+        a.sectionNo = p[20];
+        a.sectionName = p[21];
+        a.garmentGroupNo = p[22];
+        a.garmentGroupName = p[23];
+        a.detailDesc = p[24];
         return a;
     }
 }

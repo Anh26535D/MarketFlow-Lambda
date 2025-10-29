@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS marketflow.customer_purchase_history (
     paymentMethod TEXT,
     region TEXT,
     sourceSystem TEXT,
-    PRIMARY KEY (customerId, timestamp)
-) WITH CLUSTERING ORDER BY (timestamp DESC);
+    PRIMARY KEY (customerId, productId, timestamp)
+) WITH CLUSTERING ORDER BY (productId ASC, timestamp DESC);

@@ -61,8 +61,8 @@ public class HnMDataWrapper implements DataWrapper {
             HnMTransaction tx = HnMTransaction.fromArray(p);
             if (tx == null) return null;
 
-            HnMArticle article = findArticleById(tx.article_id);
-            HnMCustomer customer = findCustomerById(tx.customer_id);
+            HnMArticle article = findArticleById(tx.getArticleId());
+            HnMCustomer customer = findCustomerById(tx.getCustomerId());
 
             return getUnifiedDataModel(tx, article, customer);
 
@@ -125,29 +125,29 @@ public class HnMDataWrapper implements DataWrapper {
         UnifiedDataModel unified = new UnifiedDataModel();
 
         unified.sourceSystem = (SOURCE_NAME);
-        unified.timestamp = (tx.t_dat);
+        unified.timestamp = (tx.gettDat());
 
         unified.orderStatus = ("Completed");
         unified.shippingMethod = ("Online");
         unified.paymentMethod = ("Credit Card");
 
-        unified.totalAmount = (tx.price);
+        unified.totalAmount = (tx.getPrice());
         unified.quantity = (1);
-        unified.price = (tx.price);
+        unified.price = (tx.getPrice());
 
         if (article != null) {
-            unified.productType = (article.product_type_name);
-            unified.brand = (article.department_name);
-            unified.category = (article.product_group_name);
-            unified.productName = (article.prod_name);
-            unified.productId = (article.article_id);
+            unified.productType = (article.getProductTypeName());
+            unified.brand = (article.getDepartmentName());
+            unified.category = (article.getProductGroupName());
+            unified.productName = (article.getProdName());
+            unified.productId = (article.getArticleId());
         }
 
         if (customer != null) {
-            unified.age = (parseIntSafe(customer.age));
-            unified.region = (customer.postal_code);
+            unified.age = (parseIntSafe(customer.getAge()));
+            unified.region = (customer.getPostalCode());
             unified.customerSegment = (deriveCustomerSegment(customer));
-            unified.customerId = (customer.customer_id);
+            unified.customerId = (customer.getCustomerId());
         }
 
         return unified;
@@ -164,9 +164,9 @@ public class HnMDataWrapper implements DataWrapper {
     private String deriveCustomerSegment(HnMCustomer customer) {
         if (customer == null) return "Unknown";
 
-        String fn = safeLower(customer.FN);
-        String club = safeUpper(customer.club_member_status);
-        String freq = safeLower(customer.fashion_news_frequency);
+        String fn = safeLower(customer.getFn());
+        String club = safeUpper(customer.getClubMemberStatus());
+        String freq = safeLower(customer.getFashionNewsFrequency());
 
         boolean isFrequent = fn.equals("1") || fn.equals("1.0");
         boolean isActive = club.equals("ACTIVE");

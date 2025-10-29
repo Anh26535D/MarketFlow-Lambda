@@ -17,7 +17,6 @@ public class CustomerPurchaseHistory implements Serializable {
     private String region;
     private String sourceSystem;
 
-    // --- Getters and Setters ---
     public String getCustomerId() { return customerId; }
     public void setCustomerId(String customerId) { this.customerId = customerId; }
 
