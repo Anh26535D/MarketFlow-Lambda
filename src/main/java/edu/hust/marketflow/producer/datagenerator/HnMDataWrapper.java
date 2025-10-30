@@ -131,9 +131,14 @@ public class HnMDataWrapper implements DataWrapper {
         unified.shippingMethod = ("Online");
         unified.paymentMethod = ("Credit Card");
 
+        // TODO: fetch exchange rate if needed
         unified.totalAmount = (tx.getPrice());
         unified.quantity = (1);
         unified.price = (tx.getPrice());
+
+        // SEK -> USD
+        unified.totalAmount = unified.totalAmount * 1000 * 0.11;
+        unified.price = unified.price * 1000 * 0.11;
 
         if (article != null) {
             unified.productType = (article.getProductTypeName());

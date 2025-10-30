@@ -3,6 +3,7 @@ package edu.hust.marketflow.producer;
 import edu.hust.marketflow.model.UnifiedDataModel;
 import edu.hust.marketflow.producer.datagenerator.DataWrapper;
 import edu.hust.marketflow.producer.datagenerator.HnMDataWrapper;
+import edu.hust.marketflow.producer.datagenerator.OlistDataWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class FakeStreamProducer {
     public static void main(String[] args) throws Exception {
         FakeStreamProducer hmStream = new FakeStreamProducer(5000);
         hmStream.addWrapper(new HnMDataWrapper())
+                .addWrapper(new OlistDataWrapper())
                 .addDataConsumer( record -> System.out.println(">>> New record: " + record))
                 .addDataConsumer(new KafkaProducerDataConsumer());
         hmStream.start();
