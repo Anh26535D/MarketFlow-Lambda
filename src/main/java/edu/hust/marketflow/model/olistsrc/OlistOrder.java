@@ -10,23 +10,6 @@ public class OlistOrder {
     private String orderDeliveredCustomerDate;
     private String orderEstimatedDeliveryDate;
 
-    public static int getFieldCount() {
-        return 8;
-    }
-
-    public static OlistOrder fromArray(String [] data) {
-        OlistOrder order = new OlistOrder();
-        order.orderId = data[0];
-        order.customerId = data[1];
-        order.orderStatus = data[2];
-        order.orderPurchaseTimestamp = data[3];
-        order.orderApprovedAt = data[4];
-        order.orderDeliveredCarrierDate = data[5];
-        order.orderDeliveredCustomerDate = data[6];
-        order.orderEstimatedDeliveryDate = data[7];
-        return order;
-    }
-
     public String getCustomerId() {
         return customerId;
     }

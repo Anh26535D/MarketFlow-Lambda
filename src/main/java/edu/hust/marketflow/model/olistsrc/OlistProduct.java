@@ -11,24 +11,6 @@ public class OlistProduct {
     private String productHeightCm;
     private String productWidthCm;
 
-    public static int getFieldCount() {
-        return 9;
-    }
-
-    public static OlistProduct fromArray(String [] data) {
-        OlistProduct product = new OlistProduct();
-        product.productId = data[0];
-        product.productCategoryName = data[1];
-        product.productNameLenght = data[2];
-        product.productDescriptionLenght = data[3];
-        product.productPhotosQty = data[4];
-        product.productWeightG = data[5];
-        product.productLengthCm = data[6];
-        product.productHeightCm = data[7];
-        product.productWidthCm = data[8];
-        return product;
-    }
-
     public String getProductCategoryName() {
         return productCategoryName;
     }

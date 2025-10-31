@@ -27,10 +27,6 @@ public class HnMArticle {
     private String garmentGroupName;
     private String detailDesc;
 
-    public static int getFieldCount() {
-        return 25;
-    }
-
     public String getColourGroupName() {
         return colourGroupName;
     }
@@ -229,35 +225,5 @@ public class HnMArticle {
 
     public void setSectionNo(String sectionNo) {
         this.sectionNo = sectionNo;
-    }
-
-    public static HnMArticle fromArray(String [] p) {
-        HnMArticle a = new HnMArticle();
-        a.articleId = p[0];
-        a.productCode = p[1];
-        a.prodName = p[2];
-        a.productTypeNo = p[3];
-        a.productTypeName = p[4];
-        a.productGroupName = p[5];
-        a.graphicalAppearanceNo = p[6];
-        a.graphicalAppearanceName = p[7];
-        a.colourGroupCode = p[8];
-        a.colourGroupName = p[9];
-        a.perceivedColourValueId = p[10];
-        a.perceivedColourValueName = p[11];
-        a.perceivedColourMasterId = p[12];
-        a.perceivedColourMasterName = p[13];
-        a.departmentNo = p[14];
-        a.departmentName = p[15];
-        a.indexCode = p[16];
-        a.indexName = p[17];
-        a.indexGroupNo = p[18];
-        a.indexGroupName = p[19];
-        a.sectionNo = p[20];
-        a.sectionName = p[21];
-        a.garmentGroupNo = p[22];
-        a.garmentGroupName = p[23];
-        a.detailDesc = p[24];
-        return a;
     }
 }

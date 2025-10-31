@@ -7,20 +7,6 @@ public class OlistGeolocation {
     private String geolocationCity;
     private String geolocationState;
 
-    public static int getFieldCount() {
-        return 5;
-    }
-
-    public static OlistGeolocation fromArray(String [] data) {
-        OlistGeolocation geolocation = new OlistGeolocation();
-        geolocation.geolocationZipCodePrefix = data[0];
-        geolocation.geolocationLat = data[1];
-        geolocation.geolocationLng = data[2];
-        geolocation.geolocationCity = data[3];
-        geolocation.geolocationState = data[4];
-        return geolocation;
-    }
-
     public String getGeolocationLng() {
         return geolocationLng;
     }

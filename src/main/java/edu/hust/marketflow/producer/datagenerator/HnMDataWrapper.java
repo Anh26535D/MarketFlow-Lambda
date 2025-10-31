@@ -2,6 +2,8 @@ package edu.hust.marketflow.producer.datagenerator;
 
 import edu.hust.marketflow.model.hnmsrc.*;
 import edu.hust.marketflow.model.UnifiedDataModel;
+import edu.hust.marketflow.utils.DataSourceMapper;
+import edu.hust.marketflow.utils.TypeConvertHelper;
 
 import javax.annotation.Nullable;
 import java.io.*;
@@ -54,12 +56,11 @@ public class HnMDataWrapper implements DataWrapper {
             }
 
             String[] p = line.split(",");
-            if (p.length < HnMTransaction.getFieldCount()) {
+            if (p.length < DataSourceMapper.getFieldCount(HnMTransaction.class)) {
                 return null;
             }
 
-            HnMTransaction tx = HnMTransaction.fromArray(p);
-            if (tx == null) return null;
+            HnMTransaction tx = DataSourceMapper.fromArray(p, HnMTransaction.class);
 
             HnMArticle article = findArticleById(tx.getArticleId());
             HnMCustomer customer = findCustomerById(tx.getCustomerId());
@@ -83,9 +84,9 @@ public class HnMDataWrapper implements DataWrapper {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] p = line.split(",");
-                if (p.length < HnMArticle.getFieldCount()) continue;
+                if (p.length < DataSourceMapper.getFieldCount(HnMArticle.class)) continue;
                 if (p[0].equals(articleId)) {
-                    HnMArticle article = HnMArticle.fromArray(p);
+                    HnMArticle article = DataSourceMapper.fromArray(p, HnMArticle.class);
                     articleCache.put(articleId, article);
                     return article;
                 }
@@ -108,9 +109,9 @@ public class HnMDataWrapper implements DataWrapper {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] p = line.split(",");
-                if (p.length < HnMCustomer.getFieldCount()) continue;
+                if (p.length < DataSourceMapper.getFieldCount(HnMCustomer.class)) continue;
                 if (p[0].equals(customerId)) {
-                    HnMCustomer customer = HnMCustomer.fromArray(p);
+                    HnMCustomer customer = DataSourceMapper.fromArray(p, HnMCustomer.class);
                     customerCache.put(customerId, customer);
                     return customer;
                 }
@@ -125,7 +126,7 @@ public class HnMDataWrapper implements DataWrapper {
         UnifiedDataModel unified = new UnifiedDataModel();
 
         unified.sourceSystem = (SOURCE_NAME);
-        unified.timestamp = (tx.gettDat());
+        unified.timestamp = (tx.getTDat());
 
         unified.orderStatus = ("Completed");
         unified.shippingMethod = ("Online");
@@ -149,7 +150,7 @@ public class HnMDataWrapper implements DataWrapper {
         }
 
         if (customer != null) {
-            unified.age = (parseIntSafe(customer.getAge()));
+            unified.age = (TypeConvertHelper.safeInt(customer.getAge()));
             unified.region = (customer.getPostalCode());
             unified.customerSegment = (deriveCustomerSegment(customer));
             unified.customerId = (customer.getCustomerId());
@@ -158,20 +159,12 @@ public class HnMDataWrapper implements DataWrapper {
         return unified;
     }
 
-    private int parseIntSafe(String s) {
-        try {
-            return s == null ? 0 : Integer.parseInt(s.trim());
-        } catch (NumberFormatException e) {
-            return 0;
-        }
-    }
-
     private String deriveCustomerSegment(HnMCustomer customer) {
         if (customer == null) return "Unknown";
 
-        String fn = safeLower(customer.getFn());
-        String club = safeUpper(customer.getClubMemberStatus());
-        String freq = safeLower(customer.getFashionNewsFrequency());
+        String fn = TypeConvertHelper.safeLower(customer.getFn());
+        String club = TypeConvertHelper.safeUpper(customer.getClubMemberStatus());
+        String freq = TypeConvertHelper.safeLower(customer.getFashionNewsFrequency());
 
         boolean isFrequent = fn.equals("1") || fn.equals("1.0");
         boolean isActive = club.equals("ACTIVE");
@@ -193,11 +186,4 @@ public class HnMDataWrapper implements DataWrapper {
         return "Non-Member";
     }
 
-    private String safeLower(String s) {
-        return s == null ? "" : s.trim().toLowerCase();
-    }
-
-    private String safeUpper(String s) {
-        return s == null ? "" : s.trim().toUpperCase();
-    }
 }

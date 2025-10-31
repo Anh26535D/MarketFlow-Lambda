@@ -6,19 +6,6 @@ public class OlistSeller {
     private String sellerCity;
     private String sellerState;
 
-    public static int getFieldCount() {
-        return 4;
-    }
-
-    public static OlistSeller fromArray(String [] data) {
-        OlistSeller seller = new OlistSeller();
-        seller.sellerId = data[0];
-        seller.sellerZipCodePrefix = data[1];
-        seller.sellerCity = data[2];
-        seller.sellerState = data[3];
-        return seller;
-    }
-
     public String getSellerId() {
         return sellerId;
     }

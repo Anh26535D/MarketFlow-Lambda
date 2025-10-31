@@ -7,20 +7,6 @@ public class OlistCustomer {
     private String customerCity;
     private String customerState;
 
-    public static int getFieldCount() {
-        return 5;
-    }
-
-    public static OlistCustomer fromArray(String [] data) {
-        OlistCustomer customer = new OlistCustomer();
-        customer.customerId = data[0];
-        customer.customerUniqueId = data[1];
-        customer.customerZipCodePrefix = data[2];
-        customer.customerCity = data[3];
-        customer.customerState = data[4];
-        return customer;
-    }
-
     public String getCustomerId() {
         return customerId;
     }

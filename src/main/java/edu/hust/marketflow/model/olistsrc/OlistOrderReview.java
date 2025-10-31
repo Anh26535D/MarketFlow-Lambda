@@ -9,22 +9,6 @@ public class OlistOrderReview {
     private String reviewCreationDate;
     private String reviewAnswerTimestamp;
 
-    public static int getFieldCount() {
-        return 7;
-    }
-
-    public static OlistOrderReview fromArray(String [] data) {
-        OlistOrderReview orderReview = new OlistOrderReview();
-        orderReview.reviewId = data[0];
-        orderReview.orderId = data[1];
-        orderReview.reviewScore = data[2];
-        orderReview.reviewCommentTitle = data[3];
-        orderReview.reviewCommentMessage = data[4];
-        orderReview.reviewCreationDate = data[5];
-        orderReview.reviewAnswerTimestamp = data[6];
-        return orderReview;
-    }
-
     public String getOrderId() {
         return orderId;
     }

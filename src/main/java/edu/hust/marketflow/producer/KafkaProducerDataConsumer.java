@@ -32,9 +32,7 @@ public class KafkaProducerDataConsumer implements Consumer<UnifiedDataModel> {
     public void accept(UnifiedDataModel unifiedDataModel) {
         String json = gson.toJson(unifiedDataModel);
 
-        ProducerRecord<String, String> kafkaRecord = new ProducerRecord<>(
-                TOPIC, unifiedDataModel.customerId, json
-        );
+        ProducerRecord<String, String> kafkaRecord = new ProducerRecord<>(TOPIC, unifiedDataModel.customerId, json);
 
         kafkaProducer.send(kafkaRecord, (metadata, exception) -> {
             if (exception != null) {

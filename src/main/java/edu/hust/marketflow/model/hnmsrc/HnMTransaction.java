@@ -7,10 +7,6 @@ public class HnMTransaction {
     private double price;
     private String salesChannelId;
 
-    public static int getFieldCount() {
-        return 5;
-    }
-
     public String getArticleId() {
         return articleId;
     }
@@ -43,21 +39,11 @@ public class HnMTransaction {
         this.salesChannelId = salesChannelId;
     }
 
-    public String gettDat() {
+    public String getTDat() {
         return tDat;
     }
 
     public void settDat(String tDat) {
         this.tDat = tDat;
-    }
-
-    public static HnMTransaction fromArray(String[] p) {
-        HnMTransaction t = new HnMTransaction();
-        t.tDat = p[0];
-        t.customerId = p[1];
-        t.articleId = p[2];
-        t.price = Double.parseDouble(p[3]);
-        t.salesChannelId = p[4];
-        return t;
     }
 }

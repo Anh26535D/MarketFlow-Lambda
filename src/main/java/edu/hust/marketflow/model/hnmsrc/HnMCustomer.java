@@ -64,20 +64,4 @@ public class HnMCustomer {
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
-
-    public static int getFieldCount() {
-        return 7;
-    }
-
-    public static HnMCustomer fromArray(String[] p) {
-        HnMCustomer c = new HnMCustomer();
-        c.customerId = p[0];
-        c.fn = p[1];
-        c.active = p[2];
-        c.clubMemberStatus = p[3];
-        c.fashionNewsFrequency = p[4];
-        c.age = p[5];
-        c.postalCode = p[6];
-        return c;
-    }
 }

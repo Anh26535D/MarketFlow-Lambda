@@ -2,6 +2,8 @@ package edu.hust.marketflow.producer.datagenerator;
 
 import edu.hust.marketflow.model.UnifiedDataModel;
 import edu.hust.marketflow.model.olistsrc.*;
+import edu.hust.marketflow.utils.DataSourceMapper;
+import edu.hust.marketflow.utils.TypeConvertHelper;
 
 import javax.annotation.Nullable;
 import java.io.BufferedReader;
@@ -70,12 +72,11 @@ public class OlistDataWrapper implements DataWrapper {
             }
 
             String[] p = splitCsv(line);
-            if (p.length < OlistOrder.getFieldCount()) {
+            if (p.length < DataSourceMapper.getFieldCount(OlistOrder.class)) {
                 return null;
             }
 
-            OlistOrder order = OlistOrder.fromArray(p);
-            if (order == null) return null;
+            OlistOrder order = DataSourceMapper.fromArray(p, OlistOrder.class);
 
             // find related entities
             OlistOrderItem orderItem = findOrderItemByOrderId(order.getOrderId());
@@ -110,9 +111,9 @@ public class OlistDataWrapper implements DataWrapper {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] p = splitCsv(line);
-                if (p.length < OlistProduct.getFieldCount()) continue;
+                if (p.length < DataSourceMapper.getFieldCount(OlistProduct.class)) continue;
                 if (p[0].equals(productId)) {
-                    OlistProduct product = OlistProduct.fromArray(p);
+                    OlistProduct product = DataSourceMapper.fromArray(p, OlistProduct.class);
                     productCache.put(productId, product);
                     return product;
                 }
@@ -135,9 +136,9 @@ public class OlistDataWrapper implements DataWrapper {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] p = splitCsv(line);
-                if (p.length < OlistCustomer.getFieldCount()) continue;
+                if (p.length < DataSourceMapper.getFieldCount(OlistCustomer.class)) continue;
                 if (p[0].equals(customerId)) {
-                    OlistCustomer customer = OlistCustomer.fromArray(p);
+                    OlistCustomer customer = DataSourceMapper.fromArray(p, OlistCustomer.class);
                     customerCache.put(customerId, customer);
                     return customer;
                 }
@@ -160,9 +161,9 @@ public class OlistDataWrapper implements DataWrapper {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] p = splitCsv(line);
-                if (p.length < OlistOrderItem.getFieldCount()) continue;
+                if (p.length < DataSourceMapper.getFieldCount(OlistOrderItem.class)) continue;
                 if (p[0].equals(orderId)) {
-                    OlistOrderItem item = OlistOrderItem.fromArray(p);
+                    OlistOrderItem item = DataSourceMapper.fromArray(p, OlistOrderItem.class);
                     orderItemCache.put(orderId, item);
                     return item;
                 }
@@ -185,9 +186,9 @@ public class OlistDataWrapper implements DataWrapper {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] p = splitCsv(line);
-                if (p.length < OlistOrderPayment.getFieldCount()) continue;
+                if (p.length < DataSourceMapper.getFieldCount(OlistOrderPayment.class)) continue;
                 if (p[0].equals(orderId)) {
-                    OlistOrderPayment payment = OlistOrderPayment.fromArray(p);
+                    OlistOrderPayment payment = DataSourceMapper.fromArray(p, OlistOrderPayment.class);
                     orderPaymentCache.put(orderId, payment);
                     return payment;
                 }
@@ -210,9 +211,9 @@ public class OlistDataWrapper implements DataWrapper {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] p = splitCsv(line);
-                if (p.length < OlistOrderReview.getFieldCount()) continue;
+                if (p.length < DataSourceMapper.getFieldCount(OlistOrderReview.class)) continue;
                 if (p[1].equals(orderId)) {
-                    OlistOrderReview review = OlistOrderReview.fromArray(p);
+                    OlistOrderReview review = DataSourceMapper.fromArray(p, OlistOrderReview.class);
                     orderReviewCache.put(orderId, review);
                     return review;
                 }
@@ -238,9 +239,9 @@ public class OlistDataWrapper implements DataWrapper {
         unified.shippingMethod = (item == null ? null : "Standard");
         unified.paymentMethod = (payment == null ? null : payment.getPaymentType());
 
-        unified.totalAmount = (safeDouble(payment == null ? item == null ? "0" : item.getPrice() : payment.getPaymentValue()));
+        unified.totalAmount = (TypeConvertHelper.safeDouble(payment == null ? item == null ? "0" : item.getPrice() : payment.getPaymentValue()));
         unified.quantity = (1);
-        unified.price = (safeDouble(item == null ? "0" : item.getPrice()));
+        unified.price = (TypeConvertHelper.safeDouble(item == null ? "0" : item.getPrice()));
         // TODO: fetch exchange rate if needed
         // BRL to USD
         unified.price = unified.price * 0.19;
@@ -261,16 +262,9 @@ public class OlistDataWrapper implements DataWrapper {
             unified.customerId = (customer.getCustomerId());
         }
 
-        unified.rating = (safeDouble(review == null ? "0" : review.getReviewScore()));
+        unified.rating = (TypeConvertHelper.safeDouble(review == null ? "0" : review.getReviewScore()));
 
         return unified;
     }
 
-    private double safeDouble(String s) {
-        try {
-            return s == null ? 0.0 : Double.parseDouble(s.trim());
-        } catch (NumberFormatException e) {
-            return 0.0;
-        }
-    }
 }
