@@ -77,13 +77,10 @@ public class SparkKafkaToHdfs {
                 .withColumn("orderStatus", lower(trim(col("orderStatus"))))
 
                 // Standardize timestamp format
-                .withColumn("timestamp", date_format(to_timestamp(col("timestamp")), "yyyy-MM-dd HH:mm:ss"))
+                .withColumn("timestamp", date_format(to_timestamp(col("timestamp")), "yyyy-MM-dd HH:mm:ss.SSS"))
 
                 // Deduplicate based on unique transaction keys
-                .dropDuplicates("customerId", "productId", "timestamp")
-
-                // Add metadata
-                .withColumn("ingest_time", current_timestamp());
+                .dropDuplicates("customerId", "productId", "timestamp");
 
         // --- Write to HDFS (Parquet format preferred) ---
         StreamingQuery query = cleaned.writeStream()

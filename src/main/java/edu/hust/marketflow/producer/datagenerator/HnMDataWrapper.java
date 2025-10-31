@@ -7,6 +7,7 @@ import edu.hust.marketflow.utils.TypeConvertHelper;
 
 import javax.annotation.Nullable;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class HnMDataWrapper implements DataWrapper {
@@ -126,7 +127,9 @@ public class HnMDataWrapper implements DataWrapper {
         UnifiedDataModel unified = new UnifiedDataModel();
 
         unified.sourceSystem = (SOURCE_NAME);
-        unified.timestamp = (tx.getTDat());
+        long now = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        unified.timestamp = sdf.format(new Date(now));
 
         unified.orderStatus = ("Completed");
         unified.shippingMethod = ("Online");

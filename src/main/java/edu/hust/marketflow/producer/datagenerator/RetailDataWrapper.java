@@ -10,6 +10,8 @@ import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class RetailDataWrapper implements DataWrapper {
     private static final String SOURCE_NAME = "Retail";
@@ -64,8 +66,10 @@ public class RetailDataWrapper implements DataWrapper {
 
         UnifiedDataModel unified = new UnifiedDataModel();
 
-        // --- Source System ---
         unified.sourceSystem = (SOURCE_NAME);
+        long now = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        unified.timestamp = sdf.format(new Date(now));
 
         // --- Customer Info ---
         unified.customerId = (order.getCustomerId());
@@ -93,13 +97,6 @@ public class RetailDataWrapper implements DataWrapper {
         unified.orderStatus = (order.getOrderStatus());
 
         unified.rating = (TypeConvertHelper.safeDouble(order.getRatings()));
-
-        // --- Timestamp ---
-        // Combine date + time if both exist
-        unified.timestamp = ((order.getDate() != null && order.getTime() != null)
-                ? order.getDate() + " " + order.getTime()
-                : order.getDate());
-
         return unified;
     }
 

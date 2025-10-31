@@ -9,6 +9,8 @@ import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -233,7 +235,9 @@ public class OlistDataWrapper implements DataWrapper {
         UnifiedDataModel unified = new UnifiedDataModel();
 
         unified.sourceSystem = (SOURCE_NAME);
-        unified.timestamp = (order.getOrderPurchaseTimestamp());
+        long now = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        unified.timestamp = sdf.format(new Date(now));
 
         unified.orderStatus = (order.getOrderStatus());
         unified.shippingMethod = (item == null ? null : "Standard");

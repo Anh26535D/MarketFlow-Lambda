@@ -4,10 +4,13 @@ import java.io.Serializable;
 
 /**
  * UnifiedDataModel represents a harmonized data schema
- * for all transaction-like datasets (H&M, Olist, Instacart, etc.).
+ * for all transaction-like datasets (H&M, Olist, Retail, etc.).
  * It ensures consistency across diverse sources for downstream analytics.
  */
 public class UnifiedDataModel implements Serializable {
+    public String timestamp;
+    public String sourceSystem; // e.g. "H&M", "Olist", "Retail"
+
     public String customerId;
     public String customerName;
     public String customerSegment;
@@ -31,13 +34,12 @@ public class UnifiedDataModel implements Serializable {
     public String orderStatus;
     public double rating;
 
-    public String timestamp;
-    public String sourceSystem; // e.g. "H&M", "Olist", "Instacart"
-
     @Override
     public String toString() {
         return "UnifiedDataModel{" +
-                "customerId='" + customerId + '\'' +
+                "timestamp='" + timestamp + '\'' +
+                ", sourceSystem='" + sourceSystem + '\'' +
+                ", customerId='" + customerId + '\'' +
                 ", customerName='" + customerName + '\'' +
                 ", customerSegment='" + customerSegment + '\'' +
                 ", region='" + region + '\'' +
@@ -56,8 +58,6 @@ public class UnifiedDataModel implements Serializable {
                 ", shippingMethod='" + shippingMethod + '\'' +
                 ", orderStatus='" + orderStatus + '\'' +
                 ", rating=" + rating +
-                ", timestamp='" + timestamp + '\'' +
-                ", sourceSystem='" + sourceSystem + '\'' +
                 '}';
     }
 }
