@@ -1,3 +1,12 @@
+# Data source
+datasets/*
+
+# Docker volumes
+data/
+
+# Spark jobs jars
+spark-jobs/
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
