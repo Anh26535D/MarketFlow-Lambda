@@ -4,6 +4,7 @@ import edu.hust.marketflow.model.UnifiedDataModel;
 import edu.hust.marketflow.producer.datagenerator.DataWrapper;
 import edu.hust.marketflow.producer.datagenerator.HnMDataWrapper;
 import edu.hust.marketflow.producer.datagenerator.OlistDataWrapper;
+import edu.hust.marketflow.producer.datagenerator.RetailDataWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class FakeStreamProducer {
         FakeStreamProducer hmStream = new FakeStreamProducer(5000);
         hmStream.addWrapper(new HnMDataWrapper())
                 .addWrapper(new OlistDataWrapper())
-                .addDataConsumer( record -> System.out.println(">>> New record: " + record))
+                .addWrapper(new RetailDataWrapper())
                 .addDataConsumer(new KafkaProducerDataConsumer());
         hmStream.start();
     }
