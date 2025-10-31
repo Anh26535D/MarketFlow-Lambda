@@ -84,4 +84,22 @@ public class CustomerPurchaseHistory implements Serializable {
 
     public String getSourceSystem() { return sourceSystem; }
     public void setSourceSystem(String sourceSystem) { this.sourceSystem = sourceSystem; }
+
+    @Override
+    public String toString() {
+        return "CustomerPurchaseHistory{" +
+                "customerId='" + customerId + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                ", productId='" + productId + '\'' +
+                ", productName='" + productName + '\'' +
+                ", category='" + category + '\'' +
+                ", brand='" + brand + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", totalAmount=" + totalAmount +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                ", region='" + region + '\'' +
+                ", sourceSystem='" + sourceSystem + '\'' +
+                '}';
+    }
 }

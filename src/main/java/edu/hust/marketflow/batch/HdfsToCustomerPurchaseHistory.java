@@ -33,8 +33,6 @@ public class HdfsToCustomerPurchaseHistory {
         JavaSparkContext jsc = new JavaSparkContext(spark.sparkContext());
         spark.sparkContext().setLogLevel("WARN");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         JavaRDD<Row> rows = spark.read().parquet(hdfsPath).javaRDD();
 
         // --- Map each row into UnifiedDataModel ---
@@ -91,7 +89,7 @@ public class HdfsToCustomerPurchaseHistory {
         // --- Preview sample before writing ---
         List<CustomerPurchaseHistory> sampleCustomerPurchaseHistory = customerRDD.take(5);
         System.out.println("✅ Preview sample data before writing to Cassandra:");
-        sampleCustomerPurchaseHistory.forEach(System.out::println);
+        sampleCustomerPurchaseHistory.forEach( data -> System.out.println(data.toString()) );
 
         // --- Write to Cassandra ---
         CassandraJavaUtil.javaFunctions(customerRDD)
