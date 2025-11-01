@@ -90,7 +90,7 @@ public class RetailDataWrapper implements DataWrapper {
 
         // --- Transaction Info ---
         unified.price = (TypeConvertHelper.safeDouble(order.getAmount()));
-        unified.quantity = (1);  // assuming each record = one purchase
+        unified.quantity = (TypeConvertHelper.safeInt(order.getTotalPurchases()));
         unified.totalAmount = (TypeConvertHelper.safeDouble(order.getTotalAmount()));
         unified.paymentMethod = (order.getPaymentMethod());
         unified.shippingMethod = (order.getShippingMethod() != null ? order.getShippingMethod() : "Standard");

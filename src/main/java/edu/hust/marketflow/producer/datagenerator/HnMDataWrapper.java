@@ -140,9 +140,8 @@ public class HnMDataWrapper implements DataWrapper {
         unified.quantity = (1);
         unified.price = (tx.getPrice());
 
-        // SEK -> USD
-        unified.totalAmount = unified.totalAmount * 1000 * 0.11;
-        unified.price = unified.price * 1000 * 0.11;
+        unified.totalAmount = unified.totalAmount * 1000;
+        unified.price = unified.price * 1000;
 
         if (article != null) {
             unified.productType = (article.getProductTypeName());
