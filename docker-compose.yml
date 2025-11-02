@@ -69,7 +69,7 @@ services:
     container_name: datanode
     hostname: datanode
     ports:
-      - "50075:50075"
+      - "50160:50075"
       - "50010:50010"
     environment:
       - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
@@ -137,5 +137,6 @@ services:
     volumes:
       - ./data/cassandra:/var/lib/cassandra
       - ./schema.cql:/schema.cql
+      - ./schemaDataReport.cql:/schemaDataReport.cql
     networks:
       - marketflow-net
