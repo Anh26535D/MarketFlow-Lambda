@@ -5,19 +5,24 @@ JAR_NAME="MarketFlow-Lambda-1.0-SNAPSHOT-shaded.jar"
 JAR_PATH="target/$JAR_NAME"
 SPARK_CONTAINER="spark-master"
 CONTAINER_JAR_PATH="/opt/spark-jobs/$JAR_NAME"
-MAIN_CLASS="edu.hust.marketflow.batch.HdfsToCustomerPurchaseHistory"
 SPARK_MASTER_URL="spark://spark-master:7077"
 
-echo "[1/5] Verifying JAR..."
+# --- List of batch job classes ---
+BATCH_JOBS=(
+  "edu.hust.marketflow.batch.HdfsToCustomerPurchaseHistory"
+  "edu.hust.marketflow.batch.HdfsToHourlyPurchaseRevenue"
+)
+
+echo "[1/6] Verifying JAR..."
 if [ ! -f "$JAR_PATH" ]; then
   echo "❌ JAR not found. Please build the project first using ./build_project.sh"
   exit 1
 fi
 
-echo "[2/5] Copying JAR into Spark master container..."
+echo "[2/6] Copying JAR into Spark master container..."
 docker cp "$JAR_PATH" "$SPARK_CONTAINER:$CONTAINER_JAR_PATH"
 
-echo "[3/5] Ensure Cassandra is ready and apply schema..."
+echo "[3/6] Ensure Cassandra is ready and apply schema..."
 if command -v docker-compose >/dev/null 2>&1; then
   echo "→ Starting docker-compose services (if not already up)..."
   docker-compose up -d || true
@@ -43,23 +48,29 @@ docker exec cassandra cqlsh --username cassandra --password cassandra -f schema.
 echo "→ Waiting briefly for schema propagation..."
 sleep 5
 
-echo "[4/5] Submitting Spark Batch job to cluster..."
-docker exec "$SPARK_CONTAINER" bash -c "
-  /opt/spark/bin/spark-submit \
-    --class $MAIN_CLASS \
-    --master $SPARK_MASTER_URL \
-    --conf spark.cassandra.connection.host=cassandra \
-    --conf spark.cassandra.connection.port=9042 \
-    --conf spark.sql.extensions=com.datastax.spark.connector.CassandraSparkExtensions \
-    $CONTAINER_JAR_PATH
-"
-SPARK_EXIT=$?
-if [ $SPARK_EXIT -ne 0 ]; then
-  echo "❌ spark-submit inside container returned exit code $SPARK_EXIT"
-  echo "👉 Check Spark logs: docker logs $SPARK_CONTAINER"
-  exit $SPARK_EXIT
-fi
+# --- Run all batch jobs sequentially ---
+JOB_INDEX=1
+for MAIN_CLASS in "${BATCH_JOBS[@]}"; do
+  echo "[4/$((4+${#BATCH_JOBS[@]}))] 🚀 Submitting Spark Batch Job #$JOB_INDEX: $MAIN_CLASS ..."
+  docker exec "$SPARK_CONTAINER" bash -c "
+    /opt/spark/bin/spark-submit \
+      --class $MAIN_CLASS \
+      --master $SPARK_MASTER_URL \
+      --conf spark.cassandra.connection.host=cassandra \
+      --conf spark.cassandra.connection.port=9042 \
+      --conf spark.sql.extensions=com.datastax.spark.connector.CassandraSparkExtensions \
+      $CONTAINER_JAR_PATH
+  "
+  SPARK_EXIT=$?
+  if [ $SPARK_EXIT -ne 0 ]; then
+    echo "❌ Job $MAIN_CLASS failed with exit code $SPARK_EXIT"
+    echo "👉 Check Spark logs: docker logs $SPARK_CONTAINER"
+    exit $SPARK_EXIT
+  fi
+  echo "✅ Job #$JOB_INDEX ($MAIN_CLASS) completed successfully!"
+  JOB_INDEX=$((JOB_INDEX+1))
+done
 
-echo "[5/5] ✅ Spark Batch job completed!"
-echo "👉 Check Spark Web UI at: http://localhost:8090"
+echo "[${#BATCH_JOBS[@]}/6] ✅ All Spark Batch jobs completed successfully!"
+echo "👉 Check Spark Web UI: http://localhost:8090"
 echo "👉 Check Cassandra data via: docker exec -it cassandra cqlsh"
